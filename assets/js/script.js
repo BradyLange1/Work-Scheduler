@@ -4,27 +4,32 @@
 
 
 $(function () {
+  //gets current day from dayjs
+  var currentTime = dayjs()
+  $('#currentDay').text(currentTime.format('dddd, MMMM DD'))
+
+  //setting variables
   var saveBtnEl = $('.saveBtn')
   var scheduleContent = JSON.parse(localStorage.getItem('localSchedule'))
   if (scheduleContent === null){
     scheduleContent = {}
   }
+  var scheduleLength = Object.keys(scheduleContent).length
+  var scheduleKeys = Object.keys(scheduleContent)
 
+  //printing localstorage to page
+  for (var i = 0; i < scheduleLength; i++){
+    var hourSet = $("#" + scheduleKeys[i]).find("textarea")
+    var keySet = scheduleKeys[i]
+    var description = scheduleContent[keySet]
+    hourSet.val(description)
+  }
   
-  // TODO: Add a listener for click events on the save button. This code should
-  // use the id in the containing time-block as a key to save the user input in
-  // local storage. HINT: What does `this` reference in the click listener
-  // function? How can DOM traversal be used to get the "hour-x" id of the
-  // time-block containing the button that was clicked? How might the id be
-  // useful when saving the description in local storage?
-  //
+  //saves users input to localstorage
   saveBtnEl.on('click', function(e){
     var selectedBtn = this.parentElement.id
-    console.log(selectedBtn)
     var userInput = this.previousElementSibling.value
-    console.log(userInput)
     scheduleContent[selectedBtn] = userInput
-    console.log(scheduleContent)
     localStorage.setItem('localSchedule', JSON.stringify(scheduleContent))
   })
 
@@ -39,5 +44,4 @@ $(function () {
   // the values of the corresponding textarea elements. HINT: How can the id
   // attribute of each time-block be used to do this?
   //
-  // TODO: Add code to display the current date in the header of the page.
 });
