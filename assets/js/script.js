@@ -1,8 +1,3 @@
-// Wrap all code that interacts with the DOM in a call to jQuery to ensure that
-// the code isn't run until the browser has finished rendering all the elements
-// in the html.
-
-
 $(function () {
   //gets current day from dayjs
   var currentTime = dayjs()
@@ -36,18 +31,15 @@ $(function () {
   //applies past, present, or future class
   var currentHour = currentTime.format('H')
   currentHour = Number(currentHour)
-  console.log(currentHour)
   timeBlock = $("#top").children().each(function(){
     var hourBlock = this.id.slice(5)
     hourBlock = Number(hourBlock)
     if (hourBlock === currentHour){
-      console.log(this)
       $(this).addClass('present')
     } else if (hourBlock < currentHour){
       $(this).addClass('past')
     } else if (hourBlock > currentHour){
       $(this).addClass('future')
     }
-    console.log(hourBlock)
   })
 });
